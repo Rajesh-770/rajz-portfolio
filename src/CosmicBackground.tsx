@@ -1,21 +1,18 @@
 // src/CosmicBackground.tsx
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-const STAR_COUNT = 3000; // was 5000
-const DUST_COUNT = 1200; // was 2000
-
 function Stars() {
-  const ref = useRef<THREE.Points | null>(null);
+  const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
-    const positions = new Float32Array(STAR_COUNT * 3);
-    const colors = new Float32Array(STAR_COUNT * 3);
+    const positions = new Float32Array(5000 * 3);
+    const colors = new Float32Array(5000 * 3);
 
-    for (let i = 0; i < STAR_COUNT; i++) {
-      const radius = 140;
+    for (let i = 0; i < 5000; i++) {
+      const radius = 150;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
 
@@ -33,13 +30,14 @@ function Stars() {
       colors[i * 3 + 2] = 1;
     }
 
-    return [positions, colors] as const;
+    return [positions, colors];
   }, []);
 
   useFrame((_state, delta) => {
-    if (!ref.current) return;
-    ref.current.rotation.x -= delta * 0.05;
-    ref.current.rotation.y -= delta * 0.075;
+    if (ref.current) {
+      ref.current.rotation.x -= delta * 0.05;
+      ref.current.rotation.y -= delta * 0.075;
+    }
   });
 
   return (
@@ -63,13 +61,13 @@ function Stars() {
 }
 
 function CosmicDust() {
-  const ref = useRef<THREE.Points | null>(null);
+  const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
-    const positions = new Float32Array(DUST_COUNT * 3);
-    const colors = new Float32Array(DUST_COUNT * 3);
+    const positions = new Float32Array(2000 * 3);
+    const colors = new Float32Array(2000 * 3);
 
-    for (let i = 0; i < DUST_COUNT; i++) {
+    for (let i = 0; i < 2000; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 200;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 200;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 200;
@@ -79,14 +77,14 @@ function CosmicDust() {
       colors[i * 3 + 2] = 0.8 + Math.random() * 0.2; // B
     }
 
-    return [positions, colors] as const;
+    return [positions, colors];
   }, []);
 
   useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime;
-    ref.current.rotation.x = t * 0.02;
-    ref.current.rotation.z = t * 0.03;
+    if (ref.current) {
+      ref.current.rotation.x = state.clock.elapsedTime * 0.02;
+      ref.current.rotation.z = state.clock.elapsedTime * 0.03;
+    }
   });
 
   return (
@@ -123,10 +121,16 @@ export default function CosmicBackground() {
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none">
       <Canvas
-        camera={{ position: [0, 0, 55], fov: 70 }}
-        dpr={[1, 1.5]} // limit DPR a bit for phones
+        camera={{ position: [0, 0, 50], fov: 75 }}
+        dpr={[1, 2]}
+        style={{
+          background:
+            "radial-gradient(circle at top, #020617 0%, #050014 40%, #090019 70%, #000000 100%)",
+        }}
       >
-        <Scene />
+        <Suspense fallback={null}>
+          <Scene />
+        </Suspense>
       </Canvas>
     </div>
   );
