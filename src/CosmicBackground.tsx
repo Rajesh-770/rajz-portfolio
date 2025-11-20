@@ -1,10 +1,10 @@
 // src/CosmicBackground.tsx
-import { useRef, useMemo, Suspense } from "react";
+import React, { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-function Stars() {
+const Stars: React.FC = () => {
   const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
@@ -58,9 +58,9 @@ function Stars() {
       />
     </Points>
   );
-}
+};
 
-function CosmicDust() {
+const CosmicDust: React.FC = () => {
   const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
@@ -106,18 +106,16 @@ function CosmicDust() {
       />
     </Points>
   );
-}
+};
 
-function Scene() {
-  return (
-    <>
-      <Stars />
-      <CosmicDust />
-    </>
-  );
-}
+const Scene: React.FC = () => (
+  <>
+    <Stars />
+    <CosmicDust />
+  </>
+);
 
-export default function CosmicBackground() {
+const CosmicBackground: React.FC = () => {
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none">
       <Canvas
@@ -134,4 +132,6 @@ export default function CosmicBackground() {
       </Canvas>
     </div>
   );
-}
+};
+
+export default CosmicBackground;
