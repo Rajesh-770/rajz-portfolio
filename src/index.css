@@ -1,0 +1,268 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ----------------------------------------
+   GLOBAL NEON COLORS
+------------------------------------------ */
+:root {
+  --neon-red: #ff0055;
+  --neon-blue: #00b7ff;
+  --neon-violet: #7c3aed;
+}
+
+/* Tailwind utility helpers */
+.bg-neonRed {
+  background-color: var(--neon-red);
+}
+.text-neonRed {
+  color: var(--neon-red);
+}
+.bg-neonBlue {
+  background-color: var(--neon-blue);
+}
+.text-neonBlue {
+  color: var(--neon-blue);
+}
+
+/* ----------------------------------------
+   BASE LAYOUT
+------------------------------------------ */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #020617;
+  color: #f8fafc;
+  padding-top: 72px; /* offset for fixed navbar */
+  font-family: "Inter", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ----------------------------------------
+   NEO-MODERN BACKGROUND + AURORA
+------------------------------------------ */
+/* Dark base + subtle animated aurora in the back */
+.neo-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255, 0, 85, 0.18), transparent 60%),
+    radial-gradient(circle at 100% 100%, rgba(0, 183, 255, 0.2), transparent 60%),
+    radial-gradient(circle at 80% 10%, rgba(124, 58, 237, 0.22), transparent 60%),
+    linear-gradient(145deg, #020617 0%, #000000 100%);
+  background-size: 160% 160%;
+  animation: auroraMove 26s ease-in-out infinite;
+}
+
+/* Cyber grid overlay (very subtle) */
+.neo-bg::before {
+  content: "";
+  position: fixed;
+  inset: -200px;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+  background-size: 110px 110px;
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Soft vignette so edges are darker (Netflix-ish) */
+.neo-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at top, transparent 0%, rgba(0, 0, 0, 0.78) 70%),
+    radial-gradient(circle at bottom, transparent 0%, rgba(0, 0, 0, 0.88) 78%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes auroraMove {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+/* ----------------------------------------
+   GLASSMORPHIC CARD
+------------------------------------------ */
+.neo-card {
+  position: relative;
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 1.25rem;
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.75),
+    0 0 1px rgba(255, 255, 255, 0.15);
+  z-index: 1;
+}
+
+/* inner edge glow */
+.neo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  pointer-events: none;
+}
+
+/* ----------------------------------------
+   NEON TEXT
+------------------------------------------ */
+.neon-text {
+  background: linear-gradient(
+    90deg,
+    var(--neon-red),
+    var(--neon-blue),
+    var(--neon-violet)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ----------------------------------------
+   GLOW HOVER EFFECT (CARDS)
+------------------------------------------ */
+.glow-hover {
+  transition: all 0.25s ease;
+}
+
+.glow-hover:hover {
+  box-shadow:
+    0 0 25px rgba(255, 0, 90, 0.45),
+    0 0 40px rgba(0, 183, 255, 0.35),
+    0 0 55px rgba(124, 58, 237, 0.35);
+  transform: translateY(-6px) scale(1.015);
+}
+
+/* ----------------------------------------
+   GLOW PILL BUTTONS / SKILL TAGS
+------------------------------------------ */
+.glow-pill {
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 0 12px rgba(255, 0, 85, 0.5),
+    0 0 20px rgba(0, 183, 255, 0.4);
+  transition: 0.25s ease;
+}
+
+.glow-pill:hover {
+  box-shadow:
+    0 0 20px rgba(255, 0, 85, 0.7),
+    0 0 35px rgba(0, 183, 255, 0.6);
+  transform: translateY(-3px) scale(1.03);
+}
+
+/* ----------------------------------------
+   BULLET GLOW FOR EXPERIENCE LIST
+------------------------------------------ */
+.glow-dot {
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.9);
+}
+
+/* ----------------------------------------
+   FLOATING LIGHTS (HERO CARD ONLY)
+------------------------------------------ */
+.floating-light {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  border-radius: 100%;
+  filter: blur(120px);
+  opacity: 0.35;
+  animation: float 8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.light-red {
+  background: var(--neon-red);
+  top: -50px;
+  left: -80px;
+}
+.light-blue {
+  background: var(--neon-blue);
+  bottom: -50px;
+  right: -80px;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(40px);
+  }
+}
+
+/* ----------------------------------------
+   NEON CURSOR (CursorGlow.tsx)
+------------------------------------------ */
+.cursor-neon {
+  position: fixed;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at 30% 30%, #ffffff, transparent 60%),
+    radial-gradient(circle at 70% 70%, var(--neon-blue), transparent 60%),
+    radial-gradient(circle at 50% 100%, var(--neon-red), transparent 60%);
+  box-shadow:
+    0 0 25px rgba(255, 0, 85, 0.8),
+    0 0 45px rgba(0, 183, 255, 0.8);
+}
+
+/* Hide default cursor – we use our neon bubble */
+body,
+button,
+a {
+  cursor: none;
+}
+
+/* ----------------------------------------
+   SCROLLBAR
+------------------------------------------ */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(var(--neon-red), var(--neon-blue));
+  border-radius: 10px;
+}
+
+/* Hide scrollbar helper */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
