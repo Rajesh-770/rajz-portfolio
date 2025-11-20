@@ -1,10 +1,10 @@
 // src/CosmicBackground.tsx
-import React, { useRef, useMemo, Suspense } from "react";
+import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import * as THREE from "three";
 
-const Stars: React.FC = () => {
+function Stars() {
   const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
@@ -16,7 +16,6 @@ const Stars: React.FC = () => {
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
 
-      // position on a big sphere
       positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
       positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
       positions[i * 3 + 2] = radius * Math.cos(phi);
@@ -24,7 +23,6 @@ const Stars: React.FC = () => {
       const colorVariation = Math.random();
       const base = 0.8 + colorVariation * 0.2;
 
-      // slightly bluish / violet white
       colors[i * 3] = base;
       colors[i * 3 + 1] = base;
       colors[i * 3 + 2] = 1;
@@ -58,9 +56,9 @@ const Stars: React.FC = () => {
       />
     </Points>
   );
-};
+}
 
-const CosmicDust: React.FC = () => {
+function CosmicDust() {
   const ref = useRef<THREE.Points>(null);
 
   const [positions, colors] = useMemo(() => {
@@ -72,9 +70,9 @@ const CosmicDust: React.FC = () => {
       positions[i * 3 + 1] = (Math.random() - 0.5) * 200;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 200;
 
-      colors[i * 3] = 0.5 + Math.random() * 0.5; // R
-      colors[i * 3 + 1] = 0.2 + Math.random() * 0.3; // G
-      colors[i * 3 + 2] = 0.8 + Math.random() * 0.2; // B
+      colors[i * 3] = 0.5 + Math.random() * 0.5;
+      colors[i * 3 + 1] = 0.2 + Math.random() * 0.3;
+      colors[i * 3 + 2] = 0.8 + Math.random() * 0.2;
     }
 
     return [positions, colors];
@@ -106,16 +104,18 @@ const CosmicDust: React.FC = () => {
       />
     </Points>
   );
-};
+}
 
-const Scene: React.FC = () => (
-  <>
-    <Stars />
-    <CosmicDust />
-  </>
-);
+function Scene() {
+  return (
+    <>
+      <Stars />
+      <CosmicDust />
+    </>
+  );
+}
 
-const CosmicBackground: React.FC = () => {
+export default function CosmicBackground() {
   return (
     <div className="fixed inset-0 -z-10 pointer-events-none">
       <Canvas
@@ -132,6 +132,4 @@ const CosmicBackground: React.FC = () => {
       </Canvas>
     </div>
   );
-};
-
-export default CosmicBackground;
+}
