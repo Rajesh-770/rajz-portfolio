@@ -7,18 +7,6 @@ const data = [
     year: "2021 – 2025",
     score: "CGPA: 7.8",
   },
-  {
-    degree: "Higher Secondary (HSC)",
-    college: "st.George Higher Secondary School",
-    year: "2019 – 2021",
-    score: "84%",
-  },
-  {
-    degree: "Secondary School (SSLC)",
-    college: "st.George Higher Secondary School",
-    year: "2018 – 2019",
-    score: "74%",
-  },
 ];
 
 export default function Education() {
