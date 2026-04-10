@@ -5,7 +5,7 @@ const data = [
     degree: "BE – Computer Science & Engineering",
     college: "K. Ramakrishnan College of Engineering",
     year: "2021 – 2025",
-    score: "CGPA: 7.8",
+    score: "CGPA: 7.1",
   },
 ];
 
