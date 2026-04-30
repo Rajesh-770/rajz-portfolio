@@ -7,17 +7,22 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        bg: "#0a0f1f",             // deep navy-black
-        card: "#111827",           // dark elevated surface
-        neonRed: "#ff3366",
-        neonBlue: "#3b82f6",
-        neonCyan: "#22d3ee",
+        bg: "#050505",             // deep black for console
+        card: "#0f172a",           // slate-900 elevated surface
+        cyberCyan: "#06b6d4",
+        terminalGreen: "#10b981",
+        dockerBlue: "#2496ed",
+        awsOrange: "#ff9900",
+      },
+      fontFamily: {
+        mono: ['"Fira Code"', '"JetBrains Mono"', 'monospace'],
+        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        neo: "0 0 40px rgba(59,130,246,0.2)",
+        neo: "0 0 40px rgba(6, 182, 212, 0.15)",
       },
       borderRadius: {
-        neo: "1.5rem",
+        neo: "0.5rem", // More professional, less rounded than 1.5rem
       },
     },
   },

@@ -3,34 +3,25 @@
 @tailwind utilities;
 
 /* ----------------------------------------
-   GLOBAL NEON COLORS
+   GLOBAL CLOUD/CYBER COLORS
 ------------------------------------------ */
 :root {
-  --neon-red: #ff0055;
-  --neon-blue: #00b7ff;
-  --neon-violet: #7c3aed;
+  --cyber-cyan: #06b6d4;
+  --terminal-green: #10b981;
+  --docker-blue: #2496ed;
+  --aws-orange: #ff9900;
+  --slate-dark: #0f172a;
 }
 
-/* Tailwind utility helpers */
-.bg-neonRed {
-  background-color: var(--neon-red);
-}
-.text-neonRed {
-  color: var(--neon-red);
-}
-.bg-neonBlue {
-  background-color: var(--neon-blue);
-}
-.text-neonBlue {
-  color: var(--neon-blue);
-}
+/* Tailwind utility helpers for dynamic neon text if needed */
+.text-cyberCyan { color: var(--cyber-cyan); }
+.text-terminalGreen { color: var(--terminal-green); }
+.bg-terminalGreen { background-color: var(--terminal-green); }
 
 /* ----------------------------------------
    BASE LAYOUT
 ------------------------------------------ */
-html,
-body,
-#root {
+html, body, #root {
   height: 100%;
 }
 
@@ -40,7 +31,7 @@ html {
 
 body {
   margin: 0;
-  background: #020617;
+  background: #050505;
   color: #f8fafc;
   padding-top: 72px; /* offset for fixed navbar */
   font-family: "Inter", system-ui, sans-serif;
@@ -48,200 +39,173 @@ body {
 }
 
 /* ----------------------------------------
-   NEO-MODERN BACKGROUND + AURORA
+   DEVOPS GRID BACKGROUND
 ------------------------------------------ */
-/* Dark base + subtle animated aurora in the back */
 .neo-bg {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(255, 0, 85, 0.18), transparent 60%),
-    radial-gradient(circle at 100% 100%, rgba(0, 183, 255, 0.2), transparent 60%),
-    radial-gradient(circle at 80% 10%, rgba(124, 58, 237, 0.22), transparent 60%),
-    linear-gradient(145deg, #020617 0%, #000000 100%);
-  background-size: 160% 160%;
-  animation: auroraMove 26s ease-in-out infinite;
+  background-color: #050505;
 }
 
-/* Cyber grid overlay (very subtle) */
+/* Blueprint / Grid Overlay representing Infrastructure */
 .neo-bg::before {
   content: "";
   position: fixed;
-  inset: -200px;
+  inset: -100px;
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
-  background-size: 110px 110px;
-  opacity: 0.22;
+    linear-gradient(rgba(36, 150, 237, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 150, 237, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Soft vignette so edges are darker (Netflix-ish) */
+/* Subtle radial glow in the center */
 .neo-bg::after {
   content: "";
   position: fixed;
-  inset: 0;
-  background:
-    radial-gradient(circle at top, transparent 0%, rgba(0, 0, 0, 0.78) 70%),
-    radial-gradient(circle at bottom, transparent 0%, rgba(0, 0, 0, 0.88) 78%);
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+  height: 80vh;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-@keyframes auroraMove {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 100%;
-  }
-}
-
 /* ----------------------------------------
-   GLASSMORPHIC CARD
+   GLASSMORPHIC CARD (DASHBOARD PANELS)
 ------------------------------------------ */
 .neo-card {
   position: relative;
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(10, 15, 30, 0.75);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  border-radius: 1.25rem;
-  box-shadow:
-    0 0 25px rgba(0, 0, 0, 0.75),
-    0 0 1px rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   z-index: 1;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* inner edge glow */
+/* Top accent line like a terminal window */
 .neo-card::before {
   content: "";
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  border: 1px solid rgba(148, 163, 184, 0.18);
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyber-cyan), transparent);
+  border-radius: 0.5rem 0.5rem 0 0;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, background 0.3s ease;
+}
+
+.neo-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, var(--terminal-green), transparent);
 }
 
 /* ----------------------------------------
-   NEON TEXT
+   GLOW HOVER EFFECT (CARDS)
 ------------------------------------------ */
-.neon-text {
-  background: linear-gradient(
-    90deg,
-    var(--neon-red),
-    var(--neon-blue),
-    var(--neon-violet)
-  );
+.glow-hover:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.8), 0 0 25px rgba(16, 185, 129, 0.2);
+  transform: translateY(-6px);
+}
+
+/* ----------------------------------------
+   GLOW PILL BUTTONS / TAGS
+------------------------------------------ */
+.glow-pill {
+  border-radius: 0.25rem; /* Square-ish buttons */
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  transition: 0.2s ease;
+}
+
+.glow-pill:hover {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ----------------------------------------
+   TERMINAL TEXT & FONTS
+------------------------------------------ */
+.font-terminal {
+  font-family: "Fira Code", "JetBrains Mono", monospace;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(90deg, var(--cyber-cyan), var(--terminal-green));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 /* ----------------------------------------
-   GLOW HOVER EFFECT (CARDS)
------------------------------------------- */
-.glow-hover {
-  transition: all 0.25s ease;
-}
-
-.glow-hover:hover {
-  box-shadow:
-    0 0 25px rgba(255, 0, 90, 0.45),
-    0 0 40px rgba(0, 183, 255, 0.35),
-    0 0 55px rgba(124, 58, 237, 0.35);
-  transform: translateY(-6px) scale(1.015);
-}
-
-/* ----------------------------------------
-   GLOW PILL BUTTONS / SKILL TAGS
------------------------------------------- */
-.glow-pill {
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow:
-    0 0 12px rgba(255, 0, 85, 0.5),
-    0 0 20px rgba(0, 183, 255, 0.4);
-  transition: 0.25s ease;
-}
-
-.glow-pill:hover {
-  box-shadow:
-    0 0 20px rgba(255, 0, 85, 0.7),
-    0 0 35px rgba(0, 183, 255, 0.6);
-  transform: translateY(-3px) scale(1.03);
-}
-
-/* ----------------------------------------
-   BULLET GLOW FOR EXPERIENCE LIST
+   TIMELINE DOTS
 ------------------------------------------ */
 .glow-dot {
-  box-shadow: 0 0 12px rgba(255, 0, 85, 0.9);
+  background-color: var(--terminal-green);
+  box-shadow: 0 0 10px var(--terminal-green);
 }
 
 /* ----------------------------------------
-   FLOATING LIGHTS (HERO CARD ONLY)
+   FLOATING ORBS
 ------------------------------------------ */
-.floating-light {
+.floating-orb {
   position: absolute;
-  width: 350px;
-  height: 350px;
-  border-radius: 100%;
-  filter: blur(120px);
-  opacity: 0.35;
-  animation: float 8s ease-in-out infinite alternate;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.15;
   pointer-events: none;
+  animation: floatOrb 10s ease-in-out infinite alternate;
 }
 
-.light-red {
-  background: var(--neon-red);
-  top: -50px;
-  left: -80px;
-}
-.light-blue {
-  background: var(--neon-blue);
-  bottom: -50px;
-  right: -80px;
+.orb-cyan {
+  background: var(--cyber-cyan);
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: 20%;
 }
 
-@keyframes float {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(40px);
-  }
+.orb-blue {
+  background: var(--docker-blue);
+  width: 250px;
+  height: 250px;
+  bottom: 20%;
+  right: 10%;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(30px, -40px); }
 }
 
 /* ----------------------------------------
-   NEON CURSOR (CursorGlow.tsx)
+   CUSTOM CURSOR
 ------------------------------------------ */
 .cursor-neon {
   position: fixed;
-  width: 26px;
-  height: 26px;
-  border-radius: 9999px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--terminal-green);
+  border-radius: 50%;
   pointer-events: none;
   z-index: 50;
-  mix-blend-mode: screen;
   transform: translate(-50%, -50%);
-  background:
-    radial-gradient(circle at 30% 30%, #ffffff, transparent 60%),
-    radial-gradient(circle at 70% 70%, var(--neon-blue), transparent 60%),
-    radial-gradient(circle at 50% 100%, var(--neon-red), transparent 60%);
-  box-shadow:
-    0 0 25px rgba(255, 0, 85, 0.8),
-    0 0 45px rgba(0, 183, 255, 0.8);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  background: rgba(16, 185, 129, 0.1);
 }
 
-/* Hide default cursor – we use our neon bubble */
-body,
-button,
-a {
+body, button, a {
   cursor: none;
 }
 
@@ -252,14 +216,17 @@ a {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #020617;
+  background: #050505;
+  border-left: 1px solid #1e293b;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--neon-red), var(--neon-blue));
-  border-radius: 10px;
+  background: var(--slate-dark);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyber-cyan);
 }
 
-/* Hide scrollbar helper */
 .no-scrollbar {
   scrollbar-width: none;
 }
